@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 export default function ReportsList() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/reports')
+    fetch(`${API_URL}/reports`)
       .then((res) => res.json())
       .then((data) => {
         setReports(data);
@@ -57,5 +59,6 @@ export default function ReportsList() {
     </div>
   );
 }
+
 
 
