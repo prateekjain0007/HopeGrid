@@ -12,11 +12,13 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const MapView = () => {
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/reports')
+    fetch(`${API_URL}/reports`)
       .then(res => res.json())
       .then(data => setReports(data))
       .catch(err => console.error('Error fetching reports:', err));
@@ -67,4 +69,5 @@ const MapView = () => {
 };
 
 export default MapView;
+
 
