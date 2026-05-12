@@ -1,31 +1,28 @@
 const express = require('express');
-const connectDB = require('./db');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const reportRoutes = require('./routes/reportRoutes'); // ✅ Correct import
+require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Connect to MongoDB
-connectDB();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// ✅ Mount routes correctly
-app.use('/api/reports', reportRoutes); // for submitting and viewing reports
-app.use('/api/alerts', reportRoutes);  // for filtering/displaying alerts
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/resources', require('./routes/resources'));
+app.use('/api/user', require('./routes/user'));
+app.use('/api/reports', require('./routes/reports'));
 
-// Root test route
-app.get('/', (req, res) => {
-  res.send('ReliefLink API is running');
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected!"))
+  .catch(err => console.error("❌ DB Error:", err.message));
+
+app.get('/api/health', (req, res) => {
+  res.send('API is working!');
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ Server listening at http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
+
 
 
 
