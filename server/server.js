@@ -8,7 +8,7 @@ const app = express();
 // CORS Configuration
 app.use(
   cors({
-    origin: ["https://your-frontend-name.onrender.com"], // replace with your frontend URL
+    origin: ["https://hopegrid-1.onrender.com"],
     credentials: true,
   })
 );
