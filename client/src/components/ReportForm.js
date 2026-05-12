@@ -79,7 +79,7 @@ export default function ReportForm() {
     const toastId = toast.loading('Submitting report...');
 
     try {
-      const res = await fetch('http://localhost:5000/api/reports', {
+      const res = await fetch('http://https://hopegrid-5.onrender.com/api/reports', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

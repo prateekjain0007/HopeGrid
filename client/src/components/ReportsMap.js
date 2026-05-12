@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix marker icon for Leaflet
+// Fix marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconUrl:
@@ -16,12 +16,11 @@ L.Icon.Default.mergeOptions({
 
 export default function ReportsMap() {
   const [reports, setReports] = useState([]);
-  const API_BASE = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     async function fetchReports() {
       try {
-        const res = await fetch(`${API_BASE}/reports`);
+        const res = await fetch('http://https://hopegrid-5.onrender.com/api/reports');
         const data = await res.json();
         setReports(data);
       } catch (err) {
@@ -30,7 +29,7 @@ export default function ReportsMap() {
     }
 
     fetchReports();
-  }, [API_BASE]);
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -38,7 +37,7 @@ export default function ReportsMap() {
 
       <div className="h-[600px] w-full">
         <MapContainer
-          center={[20.5937, 78.9629]} // Centered on India
+          center={[20.5937, 78.9629]}
           zoom={5}
           scrollWheelZoom={true}
           className="h-full w-full rounded"
@@ -54,10 +53,10 @@ export default function ReportsMap() {
               position={[report.latitude, report.longitude]}
             >
               <Popup>
-                <strong>{report.title || report.type}</strong><br />
+                <strong>{report.title}</strong><br />
                 {report.location}<br />
                 Severity: {report.severity}<br />
-                Date: {new Date(report.date).toLocaleString()}
+                Date: {report.date}
               </Popup>
             </Marker>
           ))}
@@ -66,4 +65,3 @@ export default function ReportsMap() {
     </div>
   );
 }
-

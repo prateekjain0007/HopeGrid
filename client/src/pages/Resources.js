@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-
 export default function ResourcePage() {
   const [resources, setResources] = useState([]);
   const [filteredResources, setFilteredResources] = useState([]);
@@ -31,7 +29,7 @@ export default function ResourcePage() {
 
   const fetchResources = async () => {
     try {
-      const res = await fetch(`${API_URL}/resources`);
+      const res = await fetch('http://https://hopegrid-5.onrender.com/api/resources');
       const data = await res.json();
       setResources(data);
     } catch (error) {
@@ -70,7 +68,7 @@ export default function ResourcePage() {
     };
 
     try {
-      const res = await fetch(`${API_URL}/resources`, {
+      const res = await fetch('http://https://hopegrid-5.onrender.com/api/resources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -94,22 +92,23 @@ export default function ResourcePage() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      const res = await fetch(`${API_URL}/resources/${id}`, {
-        method: 'DELETE'
-      });
+  try {
+    const res = await fetch(`http://https://hopegrid-5.onrender.com/api/resources/${id}`, {
+      method: 'DELETE'
+    });
 
-      if (!res.ok) throw new Error('Failed to delete');
+    if (!res.ok) throw new Error('Failed to delete');
 
-      const updated = resources.filter((r) => r._id !== id);
-      setResources(updated);
-      setFilteredResources(updated);
-      toast.success('🗑️ Resource deleted');
-    } catch (err) {
-      console.error('❌ Delete failed:', err.message);
-      toast.error('❌ Failed to delete resource');
-    }
-  };
+    const updated = resources.filter((r) => r._id !== id);
+    setResources(updated);
+    setFilteredResources(updated);
+    toast.success('🗑️ Resource deleted');
+  } catch (err) {
+    console.error('❌ Delete failed:', err.message);
+    toast.error('❌ Failed to delete resource');
+  }
+};
+
 
   const handleEdit = (res) => {
     setEditingResourceId(res._id);
@@ -137,7 +136,7 @@ export default function ResourcePage() {
         description: editingData.description
       };
 
-      const res = await fetch(`${API_URL}/resources/${id}`, {
+      const res = await fetch(`http://https://hopegrid-5.onrender.com/api/resources/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -6,7 +6,7 @@ import {
   Navigate
 } from 'react-router-dom';
 
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast'; // Toast support
 
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
@@ -20,14 +20,12 @@ import MapView from './pages/MapView';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 
-const API_URL = process.env.REACT_APP_API_URL;
-
 function App() {
   const [reports, setReports] = useState([]);
   const isLoggedIn = !!localStorage.getItem('token');
 
   useEffect(() => {
-    fetch(`${API_URL}/reports`)
+    fetch('http://https://hopegrid-5.onrender.com/api/reports')
       .then((res) => res.json())
       .then((data) => setReports(data))
       .catch((err) => console.error('Failed to fetch reports:', err));
@@ -61,7 +59,7 @@ function App() {
           },
         }}
       />
-
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -115,7 +113,6 @@ function App() {
 }
 
 export default App;
-
 
 
 

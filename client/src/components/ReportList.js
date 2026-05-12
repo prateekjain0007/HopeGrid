@@ -5,10 +5,8 @@ const ReportList = () => {
   const [filteredReports, setFilteredReports] = useState([]);
   const [severityFilter, setSeverityFilter] = useState("");
 
-  const API_BASE = process.env.REACT_APP_API_URL;
-
   useEffect(() => {
-    fetch(`${API_BASE}/reports`)
+    fetch("http://https://hopegrid-5.onrender.com/api/reports")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reports");
         return res.json();
@@ -20,7 +18,7 @@ const ReportList = () => {
       .catch((err) => {
         console.error("Error fetching reports:", err);
       });
-  }, [API_BASE]);
+  }, []);
 
   useEffect(() => {
     if (severityFilter === "") {
@@ -36,19 +34,27 @@ const ReportList = () => {
 
   const getIcon = (type) => {
     switch (type) {
-      case "Flood": return "🌊";
-      case "Earthquake": return "🌎";
-      case "Fire": return "🔥";
-      case "Cyclone": return "🌀";
-      case "Landslide": return "⛰️";
-      case "Other": return "⚠️";
-      default: return "❓";
+      case "Flood":
+        return "🌊";
+      case "Earthquake":
+        return "🌎";
+      case "Fire":
+        return "🔥";
+      case "Cyclone":
+        return "🌀";
+      case "Landslide":
+        return "⛰️";
+      case "Other":
+        return "⚠️";
+      default:
+        return "❓"; // fallback for unknown values
     }
   };
 
   return (
     <div className="p-6 bg-gradient-to-b from-white via-blue-50 to-white min-h-screen">
       <div className="max-w-5xl mx-auto">
+        {/* Filter */}
         <div className="flex justify-between items-center mb-6 animate-fadeIn">
           <h2 className="text-2xl font-bold text-blue-800">Disaster Reports</h2>
           <div className="flex items-center space-x-2">
@@ -66,6 +72,7 @@ const ReportList = () => {
           </div>
         </div>
 
+        {/* Reports */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
           {filteredReports.length > 0 ? (
             filteredReports.map((report) => {
@@ -121,7 +128,6 @@ const ReportList = () => {
 };
 
 export default ReportList;
-
 
 
 

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +13,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const res = await fetch('http://https://hopegrid-5.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -36,7 +34,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl animate-fade-in">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl">
         <div className="text-center mb-6">
           <h1 className="text-4xl font-extrabold text-blue-700">HopeGrid</h1>
           <p className="text-gray-500 mt-1">Log in to continue</p>
@@ -46,25 +44,23 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-lg"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-lg"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
