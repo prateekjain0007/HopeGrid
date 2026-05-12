@@ -13,11 +13,14 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('http://https://hopegrid-5.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        'https://hopegrid-5.onrender.com/api/auth/login',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed');
@@ -36,7 +39,9 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl">
         <div className="text-center mb-6">
-          <h1 className="text-4xl font-extrabold text-blue-700">HopeGrid</h1>
+          <h1 className="text-4xl font-extrabold text-blue-700">
+            HopeGrid
+          </h1>
           <p className="text-gray-500 mt-1">Log in to continue</p>
         </div>
 
@@ -49,6 +54,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+
           <input
             type="password"
             placeholder="Password"
@@ -57,6 +63,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+
           <button
             type="submit"
             disabled={loading}

@@ -36,7 +36,7 @@ app.use('/api/user', require('./routes/user'));
 app.use('/api/reports', require('./routes/reportRoutes')); // ✅ fixed name
 
 // MongoDB connection
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/relieflink';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://https://hopegrid-5.onrender.com:27017/relieflink';
 mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ MongoDB connected!"))
   .catch(err => console.error("❌ DB Error:", err.message));

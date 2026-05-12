@@ -6,7 +6,7 @@ const ReportList = () => {
   const [severityFilter, setSeverityFilter] = useState("");
 
   useEffect(() => {
-    fetch("http://https://hopegrid-5.onrender.com/api/reports")
+    fetch("https://hopegrid-5.onrender.com/api/reports")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reports");
         return res.json();
@@ -47,16 +47,20 @@ const ReportList = () => {
       case "Other":
         return "⚠️";
       default:
-        return "❓"; // fallback for unknown values
+        return "❓";
     }
   };
 
   return (
     <div className="p-6 bg-gradient-to-b from-white via-blue-50 to-white min-h-screen">
       <div className="max-w-5xl mx-auto">
+
         {/* Filter */}
         <div className="flex justify-between items-center mb-6 animate-fadeIn">
-          <h2 className="text-2xl font-bold text-blue-800">Disaster Reports</h2>
+          <h2 className="text-2xl font-bold text-blue-800">
+            Disaster Reports
+          </h2>
+
           <div className="flex items-center space-x-2">
             <label className="font-semibold text-blue-600">Severity:</label>
             <select
@@ -77,6 +81,7 @@ const ReportList = () => {
           {filteredReports.length > 0 ? (
             filteredReports.map((report) => {
               const disaster = report.disasterType || report.type || "Other";
+
               return (
                 <div
                   key={report._id}
@@ -91,7 +96,11 @@ const ReportList = () => {
                   <h3 className="text-xl font-semibold mb-2 text-gray-800">
                     {getIcon(disaster)} {disaster}
                   </h3>
-                  <p className="text-gray-600 mb-1">{report.description}</p>
+
+                  <p className="text-gray-600 mb-1">
+                    {report.description}
+                  </p>
+
                   <p className="text-sm">
                     <strong className="text-gray-700">Severity:</strong>{" "}
                     <span
@@ -106,9 +115,11 @@ const ReportList = () => {
                       {report.severity}
                     </span>
                   </p>
+
                   <p className="text-sm text-gray-500">
                     <strong>Location:</strong> {report.location}
                   </p>
+
                   <p className="text-sm text-gray-500">
                     <strong>Date:</strong>{" "}
                     {new Date(report.date).toLocaleString()}
@@ -122,6 +133,7 @@ const ReportList = () => {
             </p>
           )}
         </div>
+
       </div>
     </div>
   );

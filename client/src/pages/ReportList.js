@@ -6,7 +6,7 @@ export default function ReportsList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://https://hopegrid-5.onrender.com/api/reports')
+    fetch('https://hopegrid-5.onrender.com/api/reports')
       .then((res) => res.json())
       .then((data) => {
         setReports(data);
@@ -39,13 +39,18 @@ export default function ReportsList() {
                 <h3 className="text-lg font-semibold text-blue-700 mb-1">
                   {report.disasterType || 'Unknown Disaster'} in {report.location}
                 </h3>
+
                 {report.description && (
-                  <p className="text-sm text-gray-700 mb-2">{report.description}</p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    {report.description}
+                  </p>
                 )}
+
                 <p className="text-sm text-gray-600">
                   📅 {moment(report.date).format('LL')} <br />
                   ⚠️ <span className="font-medium">Severity:</span> {report.severity}
                 </p>
+
                 <p className="text-xs text-gray-500 mt-2">
                   📍 Coordinates: {report.latitude}, {report.longitude}
                 </p>

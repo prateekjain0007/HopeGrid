@@ -20,7 +20,9 @@ export default function ReportsMap() {
   useEffect(() => {
     async function fetchReports() {
       try {
-        const res = await fetch('http://https://hopegrid-5.onrender.com/api/reports');
+        const res = await fetch(
+          'https://hopegrid-5.onrender.com/api/reports'
+        );
         const data = await res.json();
         setReports(data);
       } catch (err) {
@@ -33,7 +35,9 @@ export default function ReportsMap() {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Reported Disaster Locations</h2>
+      <h2 className="text-xl font-bold mb-4">
+        Reported Disaster Locations
+      </h2>
 
       <div className="h-[600px] w-full">
         <MapContainer
@@ -53,9 +57,12 @@ export default function ReportsMap() {
               position={[report.latitude, report.longitude]}
             >
               <Popup>
-                <strong>{report.title}</strong><br />
-                {report.location}<br />
-                Severity: {report.severity}<br />
+                <strong>{report.title}</strong>
+                <br />
+                {report.location}
+                <br />
+                Severity: {report.severity}
+                <br />
                 Date: {report.date}
               </Popup>
             </Marker>

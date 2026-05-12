@@ -79,7 +79,7 @@ export default function ReportForm() {
     const toastId = toast.loading('Submitting report...');
 
     try {
-      const res = await fetch('http://https://hopegrid-5.onrender.com/api/reports', {
+      const res = await fetch('https://hopegrid-5.onrender.com/api/reports', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -116,7 +116,9 @@ export default function ReportForm() {
 
         {/* Disaster Type */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Disaster Type</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Disaster Type
+          </label>
           <select
             name="disasterType"
             value={formData.disasterType}
@@ -136,7 +138,9 @@ export default function ReportForm() {
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
@@ -150,7 +154,9 @@ export default function ReportForm() {
 
         {/* Location */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Location
+          </label>
           <input
             type="text"
             name="location"
@@ -164,7 +170,9 @@ export default function ReportForm() {
 
         {/* Date */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Date
+          </label>
           <input
             type="date"
             name="date"
@@ -177,7 +185,9 @@ export default function ReportForm() {
 
         {/* Severity */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Severity</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Severity
+          </label>
           <select
             name="severity"
             value={formData.severity}
@@ -203,7 +213,9 @@ export default function ReportForm() {
 
       {/* Map */}
       <div className="mt-12 max-w-xl mx-auto">
-        <h3 className="text-xl font-semibold mb-2 text-gray-800">🗺️ Select Location on Map</h3>
+        <h3 className="text-xl font-semibold mb-2 text-gray-800">
+          🗺️ Select Location on Map
+        </h3>
         <div className="rounded-xl overflow-hidden border border-gray-300 shadow">
           <MapContainer
             center={[latitude || 20.5937, longitude || 78.9629]}

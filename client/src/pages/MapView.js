@@ -1,4 +1,3 @@
-// src/pages/MapView.jsx
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
@@ -16,7 +15,7 @@ const MapView = () => {
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
-    fetch('http://https://hopegrid-5.onrender.com/api/reports')
+    fetch('https://hopegrid-5.onrender.com/api/reports')
       .then(res => res.json())
       .then(data => setReports(data))
       .catch(err => console.error('Error fetching reports:', err));
@@ -31,7 +30,7 @@ const MapView = () => {
 
         <div className="rounded-xl overflow-hidden border border-gray-300 shadow">
           <MapContainer
-            center={[20.5937, 78.9629]} // Default center: India
+            center={[20.5937, 78.9629]}
             zoom={5}
             scrollWheelZoom={true}
             className="h-[600px] w-full"
@@ -51,10 +50,16 @@ const MapView = () => {
               >
                 <Popup>
                   <div className="text-sm">
-                    <p className="font-semibold text-blue-600">{report.disasterType}</p>
+                    <p className="font-semibold text-blue-600">
+                      {report.disasterType}
+                    </p>
                     <p>{report.description}</p>
-                    <p className="italic text-gray-600">Severity: {report.severity}</p>
-                    <p className="text-xs text-gray-500 mt-1">📍 {report.location}</p>
+                    <p className="italic text-gray-600">
+                      Severity: {report.severity}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      📍 {report.location}
+                    </p>
                   </div>
                 </Popup>
               </Marker>

@@ -29,7 +29,9 @@ export default function ResourcePage() {
 
   const fetchResources = async () => {
     try {
-      const res = await fetch('http://https://hopegrid-5.onrender.com/api/resources');
+      const res = await fetch(
+        'https://hopegrid-5.onrender.com/api/resources'
+      );
       const data = await res.json();
       setResources(data);
     } catch (error) {
@@ -51,6 +53,7 @@ export default function ResourcePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const { type, location, description, details } = formData;
     const { contact, quantity } = details;
 
@@ -68,15 +71,19 @@ export default function ResourcePage() {
     };
 
     try {
-      const res = await fetch('http://https://hopegrid-5.onrender.com/api/resources', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      const res = await fetch(
+        'https://hopegrid-5.onrender.com/api/resources',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }
+      );
 
       if (!res.ok) throw new Error('Failed to submit resource');
 
       await fetchResources();
+
       setFormData({
         type: '',
         location: '',
@@ -92,23 +99,26 @@ export default function ResourcePage() {
   };
 
   const handleDelete = async (id) => {
-  try {
-    const res = await fetch(`http://https://hopegrid-5.onrender.com/api/resources/${id}`, {
-      method: 'DELETE'
-    });
+    try {
+      const res = await fetch(
+        `https://hopegrid-5.onrender.com/api/resources/${id}`,
+        {
+          method: 'DELETE'
+        }
+      );
 
-    if (!res.ok) throw new Error('Failed to delete');
+      if (!res.ok) throw new Error('Failed to delete');
 
-    const updated = resources.filter((r) => r._id !== id);
-    setResources(updated);
-    setFilteredResources(updated);
-    toast.success('🗑️ Resource deleted');
-  } catch (err) {
-    console.error('❌ Delete failed:', err.message);
-    toast.error('❌ Failed to delete resource');
-  }
-};
+      const updated = resources.filter((r) => r._id !== id);
+      setResources(updated);
+      setFilteredResources(updated);
 
+      toast.success('🗑️ Resource deleted');
+    } catch (err) {
+      console.error('❌ Delete failed:', err.message);
+      toast.error('❌ Failed to delete resource');
+    }
+  };
 
   const handleEdit = (res) => {
     setEditingResourceId(res._id);
@@ -136,11 +146,14 @@ export default function ResourcePage() {
         description: editingData.description
       };
 
-      const res = await fetch(`http://https://hopegrid-5.onrender.com/api/resources/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      const res = await fetch(
+        `https://hopegrid-5.onrender.com/api/resources/${id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }
+      );
 
       if (!res.ok) throw new Error('Update failed');
 
@@ -168,20 +181,82 @@ export default function ResourcePage() {
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-blue-800 mb-6">Submit a Resource</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 shadow-lg rounded-xl">
-        <input type="text" name="type" placeholder="Resource Type" value={formData.type} onChange={handleInputChange} className="w-full p-2 border rounded" />
-        <input type="text" name="quantity" placeholder="Quantity" value={formData.details.quantity} onChange={handleInputChange} className="w-full p-2 border rounded" />
-        <input type="text" name="location" placeholder="Location" value={formData.location} onChange={handleInputChange} className="w-full p-2 border rounded" />
-        <input type="text" name="contact" placeholder="Contact Info" value={formData.details.contact} onChange={handleInputChange} className="w-full p-2 border rounded" />
-        <textarea name="description" placeholder="Description (optional)" value={formData.description} onChange={handleInputChange} className="w-full p-2 border rounded" />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Resource</button>
+      <h1 className="text-3xl font-bold text-blue-800 mb-6">
+        Submit a Resource
+      </h1>
+
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 bg-white p-6 shadow-lg rounded-xl"
+      >
+        <input
+          type="text"
+          name="type"
+          placeholder="Resource Type"
+          value={formData.type}
+          onChange={handleInputChange}
+          className="w-full p-2 border rounded"
+        />
+
+        <input
+          type="text"
+          name="quantity"
+          placeholder="Quantity"
+          value={formData.details.quantity}
+          onChange={handleInputChange}
+          className="w-full p-2 border rounded"
+        />
+
+        <input
+          type="text"
+          name="location"
+          placeholder="Location"
+          value={formData.location}
+          onChange={handleInputChange}
+          className="w-full p-2 border rounded"
+        />
+
+        <input
+          type="text"
+          name="contact"
+          placeholder="Contact Info"
+          value={formData.details.contact}
+          onChange={handleInputChange}
+          className="w-full p-2 border rounded"
+        />
+
+        <textarea
+          name="description"
+          placeholder="Description (optional)"
+          value={formData.description}
+          onChange={handleInputChange}
+          className="w-full p-2 border rounded"
+        />
+
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Submit Resource
+        </button>
       </form>
 
+      {/* LIST */}
       <div className="mt-10">
         <div className="flex justify-between mb-4">
-          <input type="text" placeholder="Search by location" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="p-2 border rounded w-1/2" />
-          <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="p-2 border rounded">
+          <input
+            type="text"
+            placeholder="Search by location"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border rounded w-1/2"
+          />
+
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="p-2 border rounded"
+          >
             <option value="latest">Latest</option>
             <option value="quantity">Sort by Quantity</option>
           </select>
@@ -189,28 +264,98 @@ export default function ResourcePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredResources.map((res) => (
-            <div key={res._id} className="p-5 bg-white shadow-md border-l-4 border-blue-400 rounded-lg">
+            <div
+              key={res._id}
+              className="p-5 bg-white shadow-md border-l-4 border-blue-400 rounded-lg"
+            >
               {editingResourceId === res._id ? (
                 <>
-                  <input name="type" value={editingData.type} onChange={handleEditChange} className="w-full mb-2 p-2 border rounded" />
-                  <input name="quantity" value={editingData.quantity} onChange={handleEditChange} className="w-full mb-2 p-2 border rounded" />
-                  <input name="location" value={editingData.location} onChange={handleEditChange} className="w-full mb-2 p-2 border rounded" />
-                  <input name="contact" value={editingData.contact} onChange={handleEditChange} className="w-full mb-2 p-2 border rounded" />
-                  <textarea name="description" value={editingData.description} onChange={handleEditChange} className="w-full mb-2 p-2 border rounded" />
-                  <button onClick={() => handleUpdate(res._id)} className="bg-green-500 text-white px-3 py-1 rounded mr-2">Save</button>
-                  <button onClick={() => setEditingResourceId(null)} className="bg-gray-400 text-white px-3 py-1 rounded">Cancel</button>
+                  <input
+                    name="type"
+                    value={editingData.type}
+                    onChange={handleEditChange}
+                    className="w-full mb-2 p-2 border rounded"
+                  />
+                  <input
+                    name="quantity"
+                    value={editingData.quantity}
+                    onChange={handleEditChange}
+                    className="w-full mb-2 p-2 border rounded"
+                  />
+                  <input
+                    name="location"
+                    value={editingData.location}
+                    onChange={handleEditChange}
+                    className="w-full mb-2 p-2 border rounded"
+                  />
+                  <input
+                    name="contact"
+                    value={editingData.contact}
+                    onChange={handleEditChange}
+                    className="w-full mb-2 p-2 border rounded"
+                  />
+                  <textarea
+                    name="description"
+                    value={editingData.description}
+                    onChange={handleEditChange}
+                    className="w-full mb-2 p-2 border rounded"
+                  />
+
+                  <button
+                    onClick={() => handleUpdate(res._id)}
+                    className="bg-green-500 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    onClick={() => setEditingResourceId(null)}
+                    className="bg-gray-400 text-white px-3 py-1 rounded"
+                  >
+                    Cancel
+                  </button>
                 </>
               ) : (
                 <>
-                  <h2 className="text-lg font-semibold text-blue-700">{res.type}</h2>
-                  <p><strong>Quantity:</strong> {res.quantity}</p>
-                  <p><strong>Location:</strong> {res.location}</p>
-                  <p><strong>Contact:</strong> {res.contact}</p>
-                  {res.description && <p><strong>Description:</strong> {res.description}</p>}
-                  <p className="text-sm text-gray-500">Posted on: {res.createdAt ? new Date(res.createdAt).toLocaleString() : 'N/A'}</p>
+                  <h2 className="text-lg font-semibold text-blue-700">
+                    {res.type}
+                  </h2>
+                  <p>
+                    <strong>Quantity:</strong> {res.quantity}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {res.location}
+                  </p>
+                  <p>
+                    <strong>Contact:</strong> {res.contact}
+                  </p>
+
+                  {res.description && (
+                    <p>
+                      <strong>Description:</strong> {res.description}
+                    </p>
+                  )}
+
+                  <p className="text-sm text-gray-500">
+                    Posted on:{' '}
+                    {res.createdAt
+                      ? new Date(res.createdAt).toLocaleString()
+                      : 'N/A'}
+                  </p>
+
                   <div className="flex gap-2 mt-2">
-                    <button onClick={() => handleEdit(res)} className="text-blue-600 hover:underline text-sm">✏️ Edit</button>
-                    <button onClick={() => handleDelete(res._id)} className="text-red-600 hover:underline text-sm">🗑️ Delete</button>
+                    <button
+                      onClick={() => handleEdit(res)}
+                      className="text-blue-600 hover:underline text-sm"
+                    >
+                      ✏️ Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(res._id)}
+                      className="text-red-600 hover:underline text-sm"
+                    >
+                      🗑️ Delete
+                    </button>
                   </div>
                 </>
               )}

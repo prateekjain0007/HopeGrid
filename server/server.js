@@ -25,7 +25,7 @@ app.use('/api/reports', require('./routes/reports'));
 
 // MongoDB Connection
 const MONGO_URI =
-  process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/relieflink';
+  process.env.MONGO_URI || 'mongodb://https://hopegrid-5.onrender.com:27017/relieflink';
 
 mongoose
   .connect(MONGO_URI)

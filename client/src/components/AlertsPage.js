@@ -23,7 +23,7 @@ export default function AlertsPage() {
   const [sortOption, setSortOption] = useState('');
 
   useEffect(() => {
-    axios.get('/api/alerts')
+    axios.get('https://hopegrid-5.onrender.com/api/alerts')
       .then(res => {
         setAlerts(res.data);
         setFilteredAlerts(res.data);
@@ -78,8 +78,8 @@ export default function AlertsPage() {
           <option value="Fire">Fire</option>
           <option value="Cyclone">Cyclone</option>
           <option value="Landslide">Landslide</option>
-     
         </select>
+
         <select
           value={sortOption}
           onChange={e => setSortOption(e.target.value)}
@@ -100,12 +100,16 @@ export default function AlertsPage() {
         ) : (
           filteredAlerts.map((alert, index) => (
             <div key={index} className="border p-4 rounded shadow bg-white">
-              <h2 className="text-lg font-bold text-red-600">{alert.disasterType}</h2>
+              <h2 className="text-lg font-bold text-red-600">
+                {alert.disasterType}
+              </h2>
               <p className="text-gray-600">{alert.location}</p>
               <p className="text-sm text-gray-500">
                 {new Date(alert.createdAt).toLocaleString()}
               </p>
-              <p className="text-sm text-gray-700 mt-2">Severity: {alert.severity}</p>
+              <p className="text-sm text-gray-700 mt-2">
+                Severity: {alert.severity}
+              </p>
               <p className="mt-2">{alert.description}</p>
             </div>
           ))
@@ -123,6 +127,7 @@ export default function AlertsPage() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
+
         {filteredAlerts.map((alert, index) =>
           alert.latitude && alert.longitude ? (
             <Marker key={index} position={[alert.latitude, alert.longitude]}>
