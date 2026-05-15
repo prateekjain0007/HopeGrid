@@ -5,54 +5,77 @@ require('dotenv').config();
 
 const app = express();
 
-// CORS Configuration
-app.use(
-  cors({
-    origin: "https://hopegrid-1.onrender.com", // your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+/* =========================
+   CORS
+========================= */
 
-// Middleware
+// TEMPORARY: allow all origins while testing
+// Later you can restrict this to your frontend URL
+app.use(cors());
+
+/* =========================
+   MIDDLEWARE
+========================= */
+
 app.use(express.json());
 
-// API Routes
+/* =========================
+   ROUTES
+========================= */
+
 app.use('/api/resources', require('./routes/resources'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/reports', require('./routes/reports'));
 
-// MongoDB Connection
-const MONGO_URI =
-  process.env.MONGO_URI || 'mongodb://https://hopegrid-5.onrender.com:27017/relieflink';
+/* =========================
+   MONGODB CONNECTION
+========================= */
+
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error('❌ MONGO_URI is missing in environment variables');
+  process.exit(1);
+}
 
 mongoose
   .connect(MONGO_URI)
-  .then(() => console.log('✅ MongoDB connected!'))
-  .catch((err) => console.error('❌ DB Error:', err.message));
+  .then(() => {
+    console.log('✅ MongoDB connected!');
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+  });
 
-// Health Check Route
+/* =========================
+   HEALTH CHECK
+========================= */
+
 app.get('/api/health', (req, res) => {
-  res.status(200).send('API is working!');
+  res.status(200).json({
+    success: true,
+    message: 'API is working!',
+  });
 });
 
-// Default Route
+/* =========================
+   ROOT ROUTE
+========================= */
+
 app.get('/', (req, res) => {
   res.send('HopeGrid Backend Running ✅');
 });
 
-// Start Server
+/* =========================
+   START SERVER
+========================= */
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
-
-
-
-
-
 
 
 
